@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { Loader2, Copy, Download, Check, ArrowLeft, ArrowRight } from 'lucide-react'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 interface FormData {
   projectName: string
@@ -38,8 +39,10 @@ export default function GeneratorPage() {
   const [isSaving, setIsSaving] = useState(false)
 
   const supabase = createClient()
+  const analytics = useAnalytics()
 
   useEffect(() => {
+    analytics.trackPageView('Generator Page')
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
@@ -92,6 +95,7 @@ export default function GeneratorPage() {
       
       const generatedTemplates: GeneratedTemplates = await response.json()
       setTemplates(generatedTemplates)
+      analytics.trackTemplateGeneration(formData.projectType)
     } catch (error) {
       console.error('Error generating templates:', error)
       // Fallback to mock templates in case of API error
@@ -143,6 +147,7 @@ body:
     await navigator.clipboard.writeText(template)
     setCopiedTemplate(templateName)
     setTimeout(() => setCopiedTemplate(null), 2000)
+    analytics.trackTemplateCopy(templateName)
   }
 
   const downloadTemplate = (template: string, filename: string) => {
@@ -153,6 +158,7 @@ body:
     a.download = filename
     a.click()
     URL.revokeObjectURL(url)
+    analytics.trackTemplateDownload(filename.replace('.yml', ''))
   }
 
   const saveTemplate = async () => {
@@ -177,6 +183,7 @@ body:
       
       // Show success feedback
       alert('Template saved successfully!')
+      analytics.trackTemplateSave(formData.projectType)
     } catch (error) {
       console.error('Error saving template:', error)
       alert('Failed to save template. Please try again.')

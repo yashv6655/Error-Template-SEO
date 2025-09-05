@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ArrowLeft, Copy, Download, Check, Calendar } from 'lucide-react'
 import Link from 'next/link'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 interface Template {
   id: string
@@ -27,8 +28,10 @@ export default function TemplateDetailsPage() {
   const [copiedTemplate, setCopiedTemplate] = useState<string | null>(null)
 
   const supabase = createClient()
+  const analytics = useAnalytics()
 
   useEffect(() => {
+    analytics.trackPageView('Template Details')
     if (params.id) {
       loadTemplate(params.id as string)
     }
@@ -55,6 +58,7 @@ export default function TemplateDetailsPage() {
     await navigator.clipboard.writeText(templateContent)
     setCopiedTemplate(templateName)
     setTimeout(() => setCopiedTemplate(null), 2000)
+    analytics.trackTemplateCopy(templateName)
   }
 
   const downloadTemplate = (templateContent: string, filename: string) => {
@@ -65,6 +69,7 @@ export default function TemplateDetailsPage() {
     a.download = filename
     a.click()
     URL.revokeObjectURL(url)
+    analytics.trackTemplateDownload(filename.replace('.yml', ''))
   }
 
   if (isLoading) {

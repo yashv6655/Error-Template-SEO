@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Plus, Calendar, ExternalLink, Copy, Download, Trash2 } from 'lucide-react'
 import Link from 'next/link'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 interface Template {
   id: string
@@ -26,8 +27,10 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   const supabase = createClient()
+  const analytics = useAnalytics()
 
   useEffect(() => {
+    analytics.trackPageView('Dashboard')
     const getUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
@@ -73,8 +76,9 @@ export default function DashboardPage() {
     }
   }
 
-  const copyToClipboard = async (template: string) => {
+  const copyToClipboard = async (template: string, templateType: string) => {
     await navigator.clipboard.writeText(template)
+    analytics.trackTemplateCopy(templateType)
   }
 
   const downloadTemplate = (template: string, filename: string) => {
@@ -85,6 +89,7 @@ export default function DashboardPage() {
     a.download = filename
     a.click()
     URL.revokeObjectURL(url)
+    analytics.trackTemplateDownload(filename.replace('.yml', ''))
   }
 
   const handleSignOut = async () => {
@@ -174,7 +179,7 @@ export default function DashboardPage() {
                             <Button 
                               size="sm" 
                               variant="ghost" 
-                              onClick={() => copyToClipboard(template.bug_template)}
+                              onClick={() => copyToClipboard(template.bug_template, 'Bug Report')}
                             >
                               <Copy className="h-3 w-3" />
                             </Button>
@@ -193,7 +198,7 @@ export default function DashboardPage() {
                             <Button 
                               size="sm" 
                               variant="ghost" 
-                              onClick={() => copyToClipboard(template.feature_template)}
+                              onClick={() => copyToClipboard(template.feature_template, 'Feature Request')}
                             >
                               <Copy className="h-3 w-3" />
                             </Button>
@@ -212,7 +217,7 @@ export default function DashboardPage() {
                             <Button 
                               size="sm" 
                               variant="ghost" 
-                              onClick={() => copyToClipboard(template.performance_template)}
+                              onClick={() => copyToClipboard(template.performance_template, 'Performance Issue')}
                             >
                               <Copy className="h-3 w-3" />
                             </Button>
