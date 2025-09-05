@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IssueGen - GitHub Issue Template Generator
+
+A simple, AI-powered web application that generates SEO-optimized GitHub issue templates. Built with Next.js 15, TypeScript, Tailwind CSS, and Claude AI.
+
+## Features
+
+- **AI-Powered Generation**: Uses Claude AI to generate professional issue templates
+- **SEO Optimized**: Templates designed for discoverability and developer productivity
+- **Three Template Types**: Bug reports, feature requests, and performance issues
+- **YAML Format**: Proper GitHub issue template YAML formatting
+- **User Authentication**: Supabase auth with Google OAuth
+- **Template Management**: Save, copy, and download templates
+- **Clean Design**: Stripe-inspired UI with Tailwind CSS
+- **Analytics**: PostHog integration for usage tracking
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with TypeScript
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **AI**: Anthropic Claude API
+- **Analytics**: PostHog
+- **Deployment**: Vercel-ready
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- Anthropic API key
+- Supabase project
+- PostHog account (optional)
+
+### Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in your keys:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Claude API
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
+# PostHog (optional)
+NEXT_PUBLIC_POSTHOG_KEY=your_posthog_key
+NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Database Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Create a new Supabase project
+2. Run the SQL schema in `schema.sql` in your Supabase SQL editor
+3. Enable Google OAuth in Supabase Auth settings (optional)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
 
-## Learn More
+1. Install dependencies:
+```bash
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+2. Run the development server:
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Open [http://localhost:3000](http://localhost:3000)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   ├── auth/              # Auth pages
+│   ├── dashboard/         # Dashboard page
+│   ├── generator/         # Template generator
+│   ├── login/             # Login page
+│   └── register/          # Register page
+├── components/            # React components
+│   ├── auth/             # Authentication components
+│   ├── layout/           # Layout components
+│   ├── providers/        # Context providers
+│   └── ui/               # shadcn/ui components
+├── hooks/                # Custom hooks
+├── lib/                  # Utilities and configs
+│   └── supabase/        # Supabase client setup
+└── schema.sql           # Database schema
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Key Features Explained
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Template Generation
+- Uses Claude AI to create contextually appropriate templates
+- Generates bug report, feature request, and performance issue templates
+- Includes proper YAML formatting and required fields
+
+### User Management
+- Supabase Auth for user registration/login
+- Google OAuth integration
+- User profile management
+
+### Template Management
+- Save generated templates to database
+- View all saved templates in dashboard
+- Copy templates to clipboard
+- Download templates as YAML files
+- Delete unwanted templates
+
+### Analytics
+- Track template generations, saves, copies, downloads
+- Landing page CTA tracking
+- Page view analytics with PostHog
+
+## Deployment
+
+### Vercel
+1. Connect your GitHub repo to Vercel
+2. Add environment variables in Vercel dashboard
+3. Deploy automatically
+
+### Environment Setup
+Make sure to set all required environment variables in your deployment platform.
+
+## Contributing
+
+This is a simple, focused project built for technical interviews. The codebase prioritizes:
+
+- Clean, readable code
+- Modern React patterns
+- Proper TypeScript usage
+- Component reusability
+- Database best practices
+
+## License
+
+MIT License - feel free to use this project as a reference or starting point.
