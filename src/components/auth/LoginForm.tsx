@@ -33,7 +33,7 @@ export function LoginForm() {
       } else {
         window.location.href = '/dashboard'
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
     } finally {
       setIsLoading(false)
@@ -56,7 +56,7 @@ export function LoginForm() {
         setError(error.message)
         setIsLoading(false)
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
       setIsLoading(false)
     }

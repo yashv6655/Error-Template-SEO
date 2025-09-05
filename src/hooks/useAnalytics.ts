@@ -5,13 +5,13 @@ import { usePostHog } from 'posthog-js/react'
 export const useAnalytics = () => {
   const posthog = usePostHog()
 
-  const trackEvent = (event: string, properties?: Record<string, any>) => {
+  const trackEvent = (event: string, properties?: Record<string, unknown>) => {
     if (posthog) {
       posthog.capture(event, properties)
     }
   }
 
-  const trackPageView = (pageName: string, properties?: Record<string, any>) => {
+  const trackPageView = (pageName: string, properties?: Record<string, unknown>) => {
     if (posthog) {
       posthog.capture('$pageview', {
         $current_url: window.location.href,

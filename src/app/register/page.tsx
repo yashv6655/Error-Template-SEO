@@ -41,7 +41,7 @@ export default function RegisterPage() {
       } else {
         setSuccess(true)
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
     } finally {
       setIsLoading(false)
@@ -64,7 +64,7 @@ export default function RegisterPage() {
         setError(error.message)
         setIsLoading(false)
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred')
       setIsLoading(false)
     }

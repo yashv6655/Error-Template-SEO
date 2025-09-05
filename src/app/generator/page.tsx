@@ -160,7 +160,8 @@ body:
 
     setIsSaving(true)
     try {
-      const { error } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any)
         .from('issue_templates')
         .insert({
           user_id: user.id,

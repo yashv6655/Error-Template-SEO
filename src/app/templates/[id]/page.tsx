@@ -84,7 +84,7 @@ export default function TemplateDetailsPage() {
           <CardContent className="py-16">
             <h2 className="text-2xl font-semibold mb-4">Template not found</h2>
             <p className="text-gray-600 mb-6">
-              The template you're looking for doesn't exist or you don't have access to it.
+              The template you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.
             </p>
             <Button asChild>
               <Link href="/dashboard">

@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ArrowRight, Zap, Code, Target, Sparkles, CheckCircle, GitBranch, Bug, Plus, TrendingUp } from 'lucide-react'
 import { useAnalytics } from '@/hooks/useAnalytics'
